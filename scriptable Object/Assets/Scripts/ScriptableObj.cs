@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName ="ScriptableObj/heros")]
+//[CreateAssetMenu(menuName ="ScriptableObj/heros")]
 public class ScriptableObj : ScriptableObject
 {
     [SerializeField]

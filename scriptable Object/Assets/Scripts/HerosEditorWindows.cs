@@ -11,7 +11,7 @@ public class HerosEditorWindows : EditorWindow
     protected ScriptableObj[] heros;
     protected string selectedPropertyPach;
     protected string selectedProperty;
-
+    protected string selectedHeroDetail;
 
     [MenuItem("Window/GameData/Heros")]
     protected static void ShowWindow()
@@ -22,11 +22,6 @@ public class HerosEditorWindows : EditorWindow
     private void OnGUI()
     {
         heros = GetAllInstances<ScriptableObj>();
-        if (heros.Length>0)
-        {
-            serializedObject = new SerializedObject(heros[0]);
-        }
-
         EditorGUILayout.BeginHorizontal();
 
         EditorGUILayout.BeginVertical("box", GUILayout.MaxWidth(150), GUILayout.ExpandHeight(true));
@@ -36,8 +31,8 @@ public class HerosEditorWindows : EditorWindow
         EditorGUILayout.EndVertical();
         EditorGUILayout.BeginVertical("box", GUILayout.ExpandHeight(true));
 
-        if (selectedProperty != null)
-        {
+        if (!string.IsNullOrEmpty(selectedProperty))
+        { 
             for (int i = 0; i < heros.Length; i++)
             {
                 if (heros[i].HerosName == selectedProperty)
@@ -53,6 +48,7 @@ public class HerosEditorWindows : EditorWindow
         {
             EditorGUILayout.LabelField("select an item from the lsit");
         }
+
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndHorizontal();
 
@@ -89,10 +85,9 @@ public class HerosEditorWindows : EditorWindow
         while (p.NextVisible(false))
         {
             EditorGUILayout.PropertyField(p, true);
-
         }
 
-
+        
     }
 
 
@@ -103,14 +98,10 @@ public class HerosEditorWindows : EditorWindow
         {
             if (GUILayout.Button(p.HerosName))
             {
-                selectedPropertyPach = p.HerosName;
+                selectedProperty = p.HerosName;
             }
         }
 
-        if (!string.IsNullOrEmpty(selectedPropertyPach))
-        {
-            selectedProperty = selectedPropertyPach;
-        }
 
         if (GUILayout.Button("new hero"))
         {
@@ -121,13 +112,15 @@ public class HerosEditorWindows : EditorWindow
         }
     }
 
+
     protected void Apply()
     {
-        if (serializedObject!=null)
+        if (serializedObject != null)
         {
             serializedObject.ApplyModifiedProperties();
+            selectedProperty = serializedObject.FindProperty("herosName").stringValue;
         }
-        
+
     }
 
 }
