@@ -22,7 +22,11 @@ public class HerosEditorWindows : EditorWindow
     private void OnGUI()
     {
         heros = GetAllInstances<ScriptableObj>();
-        serializedObject = new SerializedObject(heros[0]);
+        if (heros.Length>0)
+        {
+            serializedObject = new SerializedObject(heros[0]);
+        }
+
         EditorGUILayout.BeginHorizontal();
 
         EditorGUILayout.BeginVertical("box", GUILayout.MaxWidth(150), GUILayout.ExpandHeight(true));
@@ -119,7 +123,11 @@ public class HerosEditorWindows : EditorWindow
 
     protected void Apply()
     {
-        serializedObject.ApplyModifiedProperties();
+        if (serializedObject!=null)
+        {
+            serializedObject.ApplyModifiedProperties();
+        }
+        
     }
 
 }
