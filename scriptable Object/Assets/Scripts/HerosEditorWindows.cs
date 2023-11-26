@@ -31,7 +31,7 @@ public class HerosEditorWindows : EditorWindow
         EditorGUILayout.EndVertical();
         EditorGUILayout.BeginVertical("box", GUILayout.ExpandHeight(true));
 
-        if (!string.IsNullOrEmpty(selectedProperty))
+        if (selectedProperty!=null)
         { 
             for (int i = 0; i < heros.Length; i++)
             {
